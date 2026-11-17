@@ -1,0 +1,33 @@
+{
+  "org_url": "https://<organization>.crm<region>.dynamics.com",
+  "tenant_id": "<ENTRA_TENANT_ID>",
+  "app_id": "<CUSTOMER_SERVICE_WORKSPACE_APP_ID>",
+  "namespace": "service-workspace-v1",
+  "prefix": "service_rep",
+  "label": "Service representative",
+  "enable_knowledge": false,
+  "enable_copilot": false,
+  "representative_ids": [
+    "<APPROVED_DATAVERSE_SYSTEMUSER_ID>"
+  ],
+  "workstream_ids": [
+    "<APPROVED_NATIVE_VOICE_WORKSTREAM_ID>"
+  ],
+  "representative_setup": {
+    "user_id": "<APPROVED_DATAVERSE_SYSTEMUSER_ID>",
+    "entra_object_id": "<APPROVED_ENTRA_OBJECT_ID>",
+    "queue_id": "<FALLBACK_VOICE_QUEUE_ID>",
+    "capacity_profile_id": "<INBOUND_CAPACITY_PROFILE_ID>"
+  },
+  "approvals": {
+    "provision_arabic": false,
+    "publish_app": false,
+    "publish_knowledge": false,
+    "shared_copilot_settings": false,
+    "native_copilot_status_check": false,
+    "bind_representatives_and_workstreams": false,
+    "licenses_and_region_reviewed": false,
+    "setup_representative": false,
+    "representative_knowledge_visibility": false
+  }
+}

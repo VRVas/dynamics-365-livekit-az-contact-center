@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "name": "contact-center",
+  "modules": ["web-chat"],
+  "azure": {
+    "tenantId": "",
+    "subscriptionId": "",
+    "location": "swedencentral",
+    "communicationsDataLocation": "Europe",
+    "resourceGroup": ""
+  },
+  "dynamics": {
+    "organizationUrl": ""
+  },
+  "brand": {
+    "name": {"en": "Contact center", "ar": "مركز الخدمة"},
+    "assistantName": {"en": "Assistant", "ar": "المساعد"},
+    "logoUrl": null,
+    "logoFile": null,
+    "colors": {"primary": "#0f766e", "accent": "#38bdf8"},
+    "layout": "split"
+  },
+  "locale": {
+    "default": "en",
+    "supported": ["en", "ar"],
+    "dialingCountryCode": "",
+    "timeZone": "UTC"
+  },
+  "welcome": {
+    "title": {"en": "How can we help?", "ar": "كيف يمكننا مساعدتك؟"},
+    "description": {"en": "", "ar": ""}
+  },
+  "quickActions": [],
+  "assistant": {
+    "systemPromptFile": null,
+    "knowledgeFile": null,
+    "knowledgeArabicFile": null,
+    "greeting": {"en": "Hello. How can I help?", "ar": "مرحباً. كيف يمكنني مساعدتك؟"}
+  },
+  "knowledge": {
+    "mode": "indexed",
+    "allowedDomains": [],
+    "corpusFile": null
+  },
+  "business": {
+    "caseCategories": ["general"],
+    "locationRequired": false,
+    "city": ""
+  },
+  "emailPolicy": {
+    "allowedRecipients": [],
+    "allowedDomains": []
+  },
+  "phonePolicy": {
+    "allowedOutboundNumbers": []
+  },
+  "demo": {
+    "mode": "none",
+    "seedFile": null,
+    "profilesFile": null,
+    "approved": false
+  },
+  "additionalTools": [],
+  "approvals": {
+    "content": false,
+    "azurePreview": false,
+    "serviceEligibility": false,
+    "outboundDestinations": false
+  }
+}

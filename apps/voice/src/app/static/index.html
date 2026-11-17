@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>__ORGANIZATION_NAME__ · __ASSISTANT_NAME__</title>
+
+    <!-- Pico.css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.0.6/css/pico.min.css"
+    />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/static/style.css" />
+
+  </head>
+
+  <body>
+    <!-- Header with config button only -->
+    <header class="header-container">
+      <button id="configButton" class="config-button">Config</button>
+    </header>
+
+    <!-- Configuration Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <h2>Configuration</h2>
+      <label for="languageSelect">Response language</label>
+      <select id="languageSelect">
+        <option value="en">English</option>
+        <option value="ar">العربية</option>
+      </select>
+
+      <div class="dropdown-container">
+        <label for="themeSelect">
+          Choose a voice before launching the conversation:
+        </label>
+
+        <select id="themeSelect" name="themeSelect">
+          <option value="">Server default (HUMAIN)</option>
+          <option value="mul_nourah">Nourah</option>
+          <option value="mul_abdullah">Abdullah</option>
+          <option value="mul_sara">Sara</option>
+          <option value="mul_abdulaziz">Abdulaziz</option>
+          <option value="mul_fadi">Fadi</option>
+          <option value="mul_yassin">Yassin</option>
+          <option value="mul_youssef">Youssef</option>
+        </select>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <div class="main-container">
+      <main class="container">
+        <!-- ================ LEFT COLUMN ================= -->
+        <div class="controls-panel">
+          <article class="control-box">
+            <!-- logo + title -->
+            <div class="control-header">
+              <h1 class="control-title">__ORGANIZATION_NAME__ · __ASSISTANT_NAME__</h1>
+            </div>
+
+            <!-- tab selector -->
+            <div class="tab-selector">
+              <button class="tab-button active" data-tab="guided">Web</button>
+              <button class="tab-button" data-tab="call">Call</button>
+            </div>
+
+            <!-- tab content -->
+            <div class="tab-content">
+              <!-- guided experience tab -->
+              <div id="guided-tab" class="tab-panel active">
+                <div class="button-row">
+                  <button id="toggleButton" class="action-button" disabled>
+                    Live in-app AI Agent
+                  </button>
+
+                  <!-- hidden until JS shows it -->
+                  <button id="micButton" class="mic-button" style="display: none;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                      <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- call tab -->
+              <div id="call-tab" class="tab-panel">
+                <form onsubmit="event.preventDefault();" class="call-form">
+                  <div class="button-row">
+                    <input
+                      type="text"
+                      id="phonenumber"
+                      placeholder="Approved international phone number"
+                      class="phone-input"
+                    />
+                    <button id="callButton" class="action-button call-button" disabled>
+                      Call
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- status / report -->
+            <div id="statusMessage"></div>
+            <div id="warningMessage" role="status" hidden></div>
+            <pre id="report"></pre>
+
+            <!-- agents list -->
+            <div class="agents-section">
+              <h4>Selected capabilities</h4>
+
+<div class="agents-list">
+  <div
+    class="agent-item"
+    data-feature="browserVoice"
+    hidden
+    data-tip="Browser voice assistance"
+  >
+    Voice Assistance
+  </div>
+
+  <div
+    class="agent-item"
+    data-feature="knowledge"
+    hidden
+    data-tip="Uses approved service knowledge and source links"
+  >
+    Service Guidance
+  </div>
+
+  <div
+    class="agent-item"
+    data-feature="crm"
+    hidden
+    data-tip="Records confirmed requests and retrieves current Dynamics status"
+  >
+    Service Requests
+  </div>
+
+  <div
+    class="agent-item"
+    data-feature="email"
+    hidden
+    data-tip="Sends requested correspondence to approved recipients"
+  >
+    Correspondence
+  </div>
+</div>
+
+            </div>
+          </article>
+        </div>
+
+        <div class="chat-panel">
+          __CHAT_NOTICE__
+          <iframe
+            id="chatFrame"
+            src="__CUSTOMER_UI_URL__"
+
+            title="Embedded Chat Interface"
+            loading="eager"
+          ></iframe>
+        </div>
+      </main>
+    </div>
+
+    <!-- ====================== SCRIPTS ================= -->
+    <script src="/static/app.js"></script>
+    <script>
+      /* ----- sidebar & voice selector ----- */
+      document.addEventListener("DOMContentLoaded", () => {
+        const configButton = document.getElementById("configButton");
+        const sidebar = document.getElementById("sidebar");
+
+        configButton.addEventListener("click", () => {
+          const show =
+            sidebar.style.display === "" || sidebar.style.display === "none";
+          sidebar.style.display = show ? "block" : "none";
+          document.body.classList.toggle("sidebar-visible", show);
+        });
+
+        /* ----- tab functionality ----- */
+        const tabButtons = document.querySelectorAll(".tab-button");
+        const tabPanels = document.querySelectorAll(".tab-panel");
+
+        tabButtons.forEach((button) => {
+          button.addEventListener("click", () => {
+            const targetTab = button.getAttribute("data-tab");
+
+            // Remove active class from all buttons and panels
+            tabButtons.forEach((btn) => btn.classList.remove("active"));
+            tabPanels.forEach((panel) => panel.classList.remove("active"));
+
+            // Add active class to clicked button and corresponding panel
+            button.classList.add("active");
+            document.getElementById(`${targetTab}-tab`).classList.add("active");
+          });
+        });
+      });
+
+      /* ----- tooltip handling for agents ----- */
+      const agentItems = document.querySelectorAll(".agent-item[data-tip]");
+
+      agentItems.forEach((item) => {
+        item.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          // close others
+          agentItems.forEach((other) => {
+            if (other !== item) other.classList.remove("show-tooltip");
+          });
+
+          // toggle this one
+          item.classList.toggle("show-tooltip");
+        });
+      });
+
+      // close tooltips when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest(".agent-item")) {
+          agentItems.forEach((item) => item.classList.remove("show-tooltip"));
+        }
+      });
+    </script>
+  </body>
+</html>

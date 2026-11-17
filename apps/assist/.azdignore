@@ -1,0 +1,11 @@
+# Heavy/derived dirs are regenerated inside the Docker build; excluding them keeps the
+# azd build context small and avoids the Windows ACR tar-packing slowdown.
+node_modules
+apps/console/node_modules
+packages/shared/node_modules
+apps/console/.next
+packages/shared/dist
+.git
+**/.env
+**/.env.local
+*.log

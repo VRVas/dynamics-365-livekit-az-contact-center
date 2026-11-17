@@ -1,0 +1,690 @@
+openapi: 3.1.0
+info:
+  title: Agent Assist Console API
+  description: |
+    API for the Contact Center Agent Assist Platform.
+    Provides real-time conversation ingestion, insights, and AI-powered assistance.
+  version: 0.1.0
+  contact:
+    name: Agent Assist Team
+
+servers:
+  - url: /api
+    description: Relative API path
+
+tags:
+  - name: Ingest
+    description: Message ingestion endpoints for channel adapters
+  - name: Conversations
+    description: Conversation management and retrieval
+  - name: Insights
+    description: AI-powered conversation insights and KPIs
+  - name: Knowledge
+    description: RAG-powered knowledge search
+  - name: Agent Assist
+    description: AI chat assistant for agents
+
+paths:
+  /ingest/message:
+    post:
+      operationId: ingestMessage
+      tags: [Ingest]
+      summary: Ingest a single message
+      description: |
+        Receives a normalized message from any channel adapter (chat, voice, email).
+        Triggers real-time broadcast via SignalR.
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IngestMessageRequest'
+      responses:
+        '201':
+          description: Message ingested successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IngestMessageResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /conversations:
+    get:
+      operationId: listConversations
+      tags: [Conversations]
+      summary: List conversations
+      description: Returns a paginated list of conversations with optional filters
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, closed, on-hold]
+        - name: channel
+          in: query
+          schema:
+            $ref: '#/components/schemas/Channel'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+        - name: continuationToken
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of conversations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationListResponse'
+
+  /conversations/{conversationId}:
+    get:
+      operationId: getConversation
+      tags: [Conversations]
+      summary: Get conversation by ID
+      description: Returns full conversation with all messages
+      parameters:
+        - $ref: '#/components/parameters/ConversationId'
+      responses:
+        '200':
+          description: Conversation details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /conversations/{conversationId}/messages:
+    get:
+      operationId: getConversationMessages
+      tags: [Conversations]
+      summary: Get messages for a conversation
+      description: Returns paginated messages for a conversation
+      parameters:
+        - $ref: '#/components/parameters/ConversationId'
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 200
+        - name: before
+          in: query
+          description: Return messages before this timestamp
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: List of messages
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageListResponse'
+
+  /conversations/{conversationId}/insights:
+    get:
+      operationId: getConversationInsights
+      tags: [Insights]
+      summary: Get AI-generated insights
+      description: |
+        Returns real-time insights including:
+        - Sentiment analysis (current + trend)
+        - Customer and conversation KPIs
+        - Compliance checks
+        - Next best actions
+        - Running summary
+      parameters:
+        - $ref: '#/components/parameters/ConversationId'
+      responses:
+        '200':
+          description: Conversation insights
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationInsights'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /knowledge/search:
+    post:
+      operationId: searchKnowledge
+      tags: [Knowledge]
+      summary: Search knowledge base
+      description: Hybrid search (vector + keyword) across knowledge documents
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnowledgeSearchRequest'
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeSearchResponse'
+
+  /agent-assist/chat:
+    post:
+      operationId: agentAssistChat
+      tags: [Agent Assist]
+      summary: RAG-powered agent assistant
+      description: |
+        Answers agent questions using RAG over knowledge base.
+        Optionally includes conversation context for better answers.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentAssistChatRequest'
+      responses:
+        '200':
+          description: AI-generated answer with citations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentAssistChatResponse'
+
+  /negotiate:
+    post:
+      operationId: negotiateSignalR
+      tags: [Conversations]
+      summary: Negotiate SignalR connection
+      description: Returns SignalR connection info for real-time updates
+      responses:
+        '200':
+          description: SignalR connection info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignalRConnectionInfo'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for channel adapters
+
+  parameters:
+    ConversationId:
+      name: conversationId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Unique conversation identifier
+
+  responses:
+    BadRequest:
+      description: Invalid request payload
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Missing or invalid authentication
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+
+  schemas:
+    # Enums
+    Speaker:
+      type: string
+      enum: [customer, agent, system]
+
+    Channel:
+      type: string
+      enum: [chat, voice, email, other]
+
+    ConversationStatus:
+      type: string
+      enum: [active, closed, on-hold]
+
+    SentimentLabel:
+      type: string
+      enum: [positive, neutral, negative]
+
+    RiskLevel:
+      type: string
+      enum: [low, medium, high]
+
+    ComplexityLevel:
+      type: string
+      enum: [simple, moderate, complex]
+
+    ActionType:
+      type: string
+      enum: [reply_template, workflow, knowledge_snippet, link]
+
+    # Core Models
+    MessageMetadata:
+      type: object
+      properties:
+        language:
+          type: string
+          description: ISO 639-1 language code
+        sourceSystem:
+          type: string
+          description: Origin system identifier
+        transcriptionConfidence:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: ASR confidence score for voice
+        tags:
+          type: array
+          items:
+            type: string
+
+    Message:
+      type: object
+      required: [messageId, conversationId, timestamp, speaker, channel, text]
+      properties:
+        messageId:
+          type: string
+          format: uuid
+        conversationId:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        speaker:
+          $ref: '#/components/schemas/Speaker'
+        channel:
+          $ref: '#/components/schemas/Channel'
+        text:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/MessageMetadata'
+
+    Conversation:
+      type: object
+      required: [conversationId, createdAt, updatedAt, channel, status]
+      properties:
+        conversationId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        channel:
+          $ref: '#/components/schemas/Channel'
+        status:
+          $ref: '#/components/schemas/ConversationStatus'
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+        metadata:
+          type: object
+          additionalProperties: true
+
+    # Ingest
+    IngestMessageRequest:
+      type: object
+      required: [conversation_id, message_id, timestamp, speaker, channel, text]
+      properties:
+        conversation_id:
+          type: string
+        message_id:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        speaker:
+          $ref: '#/components/schemas/Speaker'
+        channel:
+          $ref: '#/components/schemas/Channel'
+        text:
+          type: string
+        metadata:
+          type: object
+          properties:
+            language:
+              type: string
+            source_system:
+              type: string
+            transcription_confidence:
+              type: number
+            tags:
+              type: array
+              items:
+                type: string
+
+    IngestMessageResponse:
+      type: object
+      required: [success, messageId, conversationId]
+      properties:
+        success:
+          type: boolean
+        messageId:
+          type: string
+        conversationId:
+          type: string
+        isNewConversation:
+          type: boolean
+
+    # List Responses
+    ConversationListResponse:
+      type: object
+      required: [conversations]
+      properties:
+        conversations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationSummary'
+        continuationToken:
+          type: string
+
+    ConversationSummary:
+      type: object
+      required: [conversationId, createdAt, updatedAt, channel, status, messageCount]
+      properties:
+        conversationId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        channel:
+          $ref: '#/components/schemas/Channel'
+        status:
+          $ref: '#/components/schemas/ConversationStatus'
+        messageCount:
+          type: integer
+        lastMessage:
+          type: string
+
+    MessageListResponse:
+      type: object
+      required: [messages]
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+        hasMore:
+          type: boolean
+
+    # Insights
+    SentimentScore:
+      type: object
+      required: [label, score, confidence]
+      properties:
+        label:
+          $ref: '#/components/schemas/SentimentLabel'
+        score:
+          type: number
+          minimum: -1
+          maximum: 1
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+
+    SentimentTrend:
+      type: object
+      required: [current, history, frustrationScore]
+      properties:
+        current:
+          $ref: '#/components/schemas/SentimentScore'
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/SentimentScore'
+        frustrationScore:
+          type: number
+          minimum: 0
+          maximum: 1
+
+    CustomerKPIs:
+      type: object
+      required: [issueComplexity, escalationRisk, churnRisk]
+      properties:
+        issueComplexity:
+          $ref: '#/components/schemas/ComplexityLevel'
+        escalationRisk:
+          $ref: '#/components/schemas/RiskLevel'
+        churnRisk:
+          $ref: '#/components/schemas/RiskLevel'
+
+    ConversationKPIs:
+      type: object
+      required: [durationSeconds, customerMessageCount, agentMessageCount]
+      properties:
+        durationSeconds:
+          type: integer
+        estimatedHandleTimeSeconds:
+          type: integer
+        customerMessageCount:
+          type: integer
+        agentMessageCount:
+          type: integer
+        firstTimeResolutionLikelihood:
+          type: number
+          minimum: 0
+          maximum: 1
+        topicIntent:
+          type: string
+
+    ComplianceKPIs:
+      type: object
+      required: [greetingDetected, identityVerified, disclaimerMentioned]
+      properties:
+        greetingDetected:
+          type: boolean
+        identityVerified:
+          type: boolean
+        disclaimerMentioned:
+          type: boolean
+
+    NextBestAction:
+      type: object
+      required: [id, type, label, description, priority]
+      properties:
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/ActionType'
+        label:
+          type: string
+        description:
+          type: string
+        content:
+          type: string
+        url:
+          type: string
+          format: uri
+        priority:
+          type: integer
+          minimum: 1
+
+    ExtractedEntities:
+      type: object
+      properties:
+        customerName:
+          type: string
+        customerId:
+          type: string
+        productsMentioned:
+          type: array
+          items:
+            type: string
+        orderNumbers:
+          type: array
+          items:
+            type: string
+        ticketNumbers:
+          type: array
+          items:
+            type: string
+
+    ConversationInsights:
+      type: object
+      required: [conversationId, updatedAt, sentiment, customerKPIs, conversationKPIs, complianceKPIs, nextBestActions, summary, extractedEntities]
+      properties:
+        conversationId:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+        sentiment:
+          $ref: '#/components/schemas/SentimentTrend'
+        customerKPIs:
+          $ref: '#/components/schemas/CustomerKPIs'
+        conversationKPIs:
+          $ref: '#/components/schemas/ConversationKPIs'
+        complianceKPIs:
+          $ref: '#/components/schemas/ComplianceKPIs'
+        nextBestActions:
+          type: array
+          items:
+            $ref: '#/components/schemas/NextBestAction'
+        summary:
+          type: string
+        extractedEntities:
+          $ref: '#/components/schemas/ExtractedEntities'
+
+    # Knowledge
+    KnowledgeSearchRequest:
+      type: object
+      required: [query]
+      properties:
+        query:
+          type: string
+        topK:
+          type: integer
+          default: 5
+          maximum: 20
+        category:
+          type: string
+        includeContent:
+          type: boolean
+          default: true
+
+    KnowledgeSnippet:
+      type: object
+      required: [id, title, content, source, category, lastUpdated, relevanceScore]
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        source:
+          type: string
+        category:
+          type: string
+        url:
+          type: string
+          format: uri
+        lastUpdated:
+          type: string
+          format: date-time
+        relevanceScore:
+          type: number
+          minimum: 0
+          maximum: 1
+
+    KnowledgeSearchResponse:
+      type: object
+      required: [results]
+      properties:
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/KnowledgeSnippet'
+        totalCount:
+          type: integer
+
+    # Agent Assist Chat
+    AgentAssistChatRequest:
+      type: object
+      required: [question]
+      properties:
+        question:
+          type: string
+        conversationId:
+          type: string
+          description: Include conversation context
+        conversationContext:
+          type: string
+          description: Custom context to inject
+
+    AgentAssistChatResponse:
+      type: object
+      required: [answer, citations, confidence]
+      properties:
+        answer:
+          type: string
+        citations:
+          type: array
+          items:
+            $ref: '#/components/schemas/KnowledgeSnippet'
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+
+    # SignalR
+    SignalRConnectionInfo:
+      type: object
+      required: [url, accessToken]
+      properties:
+        url:
+          type: string
+          format: uri
+        accessToken:
+          type: string
+
+    # Error
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: array
+              items:
+                type: object
+                properties:
+                  field:
+                    type: string
+                  message:
+                    type: string

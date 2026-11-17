@@ -1,0 +1,19 @@
+kind: hosted
+name: moacc-contact-center
+protocols:
+  - protocol: responses
+    version: 1.0.0
+resources:
+  cpu: "1"
+  memory: 2Gi
+environment_variables:
+  - name: AZURE_AI_MODEL_DEPLOYMENT_NAME
+    value: ${AZURE_AI_MODEL_DEPLOYMENT_NAME}
+  - name: ASSIST_BASE_URL
+    value: ${ASSIST_BASE_URL}
+  - name: ASSIST_INGEST_KEY
+    value: ${ASSIST_INGEST_KEY}
+  - name: ACS_EMAIL_CONNECTION_STRING
+    value: ${ACS_EMAIL_CONNECTION_STRING}
+  - name: ACS_EMAIL_SENDER
+    value: ${ACS_EMAIL_SENDER}

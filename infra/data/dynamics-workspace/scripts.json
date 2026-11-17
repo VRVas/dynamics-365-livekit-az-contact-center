@@ -1,0 +1,175 @@
+{
+  "voice_script": {
+    "title": {"en": "01 Voice handover / تسليم المكالمة", "ar": "01 تسليم المكالمة / Voice handover"},
+    "steps": [
+      {
+        "key": "welcome",
+        "title": {"en": "Confirm language and review handover", "ar": "تأكيد اللغة ومراجعة التسليم"},
+        "instruction": {
+          "en": "Introduce yourself as a service representative and confirm the preferred supported language. Review the native join/handover summary and transcript. AI-agent-only dialogue may be absent. Verify important facts with the caller; a summary is not authoritative evidence.",
+          "ar": "عرّف بنفسك ممثلاً للخدمة وأكد اللغة المفضلة المدعومة. راجع ملخص الانضمام أو التسليم والنص الأصلي؛ قد لا يتضمن الملخص حوار المساعد الآلي. تحقق من المعلومات المهمة مع المتصل ولا تعتبر الملخص دليلاً مؤكداً."
+        }
+      },
+      {
+        "key": "identity",
+        "title": {"en": "Verify customer, not just a matching name", "ar": "التحقق من العميل لا من تطابق الاسم فقط"},
+        "instruction": {
+          "en": "Check the actual native Customer lookup, contact/account and history. Confirm only the identifying details needed for this request. Do not overwrite identity or contact details or expose another customer's information. If Customer is blank, use native lookup and confirm before associating.",
+          "ar": "تحقق من حقل العميل الأصلي وجهة الاتصال أو الحساب والسجل. اطلب الحد الأدنى اللازم للتحقق من الهوية. لا تعدّل بيانات العميل ولا تكشف معلومات عميل آخر. عند غياب الارتباط استخدم البحث الأصلي وأكد الاختيار قبل الربط."
+        }
+      },
+      {
+        "key": "customer", "macro": "review_customer",
+        "title": {"en": "Review linked customer", "ar": "مراجعة العميل المرتبط"},
+        "instruction": {"en": "Opens the real customer or Contacts if no customer is linked; never associates automatically. Related Cases includes active and resolved cases for this customer.", "ar": "يفتح العميل المرتبط أو قائمة جهات الاتصال عند غياب الارتباط ولا يربط تلقائياً. تشمل البلاغات ذات الصلة البلاغات النشطة والمحلولة لهذا العميل."}
+      },
+      {
+        "key": "case_check",
+        "title": {"en": "Confirm actual case association", "ar": "تأكيد ارتباط البلاغ الفعلي"},
+        "instruction": {
+          "en": "Check the native Case lookup and case number. An open tab is not a conversation association. Match customer, issue and number and check for duplicates. If there is no linked case, use Find cases and the native lookup, or create a case only after confirmation.",
+          "ar": "تحقق من حقل البلاغ الأصلي ورقمه. فتح تبويب لا يعني ارتباط البلاغ بالمحادثة. طابق العميل والموضوع والرقم وتجنب التكرار. إذا لم يوجد ارتباط فابحث واستخدم حقل الربط الأصلي أو أنشئ بلاغاً بعد التأكيد فقط."
+        }
+      },
+      {
+        "key": "open_case", "macro": "open_case",
+        "title": {"en": "Open linked case", "ar": "فتح البلاغ المرتبط"},
+        "instruction": {"en": "In a conversation, reads the saved native Case association rather than relying only on cached caseId or a handover CaseNumber. If no case is linked, review the current customer's Related Cases. This only opens a record; it never creates or repairs a link.", "ar": "داخل المحادثة يقرأ ارتباط البلاغ المحفوظ فعلياً بدلاً من الاعتماد فقط على معرّف البلاغ المخزن مؤقتاً أو رقمه المرسل عند التسليم. عند غياب الارتباط راجع البلاغات ذات الصلة للعميل الحالي. يفتح السجل فقط ولا ينشئ ارتباطاً أو يصلحه."}
+      },
+      {
+        "key": "find_case", "macro": "find_cases",
+        "title": {"en": "Find existing cases", "ar": "البحث عن بلاغ قائم"},
+        "instruction": {"en": "Opens the current customer, not My Active Cases. For a contact, use Related Cases > All Cases, including active and resolved cases regardless of owner. Confirm the customer, issue and case number before opening or explicitly linking a saved case.", "ar": "يفتح العميل الحالي لا قائمة بلاغاتي النشطة. لجهة الاتصال استخدم البلاغات ذات الصلة ثم جميع البلاغات، بما فيها النشطة والمحلولة بصرف النظر عن المالك. أكد العميل والموضوع ورقم البلاغ قبل الفتح أو الربط الصريح."}
+      },
+      {
+        "key": "location",
+        "title": {"en": "Confirm incident location and scope", "ar": "تأكيد موقع البلاغ ونطاقه"},
+        "instruction": {
+          "en": "Confirm the request and its scope. Ask for location only when the configured service requires it; do not collect irrelevant personal details. A contact address is not automatically the incident location. Record confirmed facts and uncertainty; do not invent an address, deadline or resolution.",
+          "ar": "أكد الطلب ونطاقه. اطلب الموقع فقط عندما تتطلبه الخدمة المحددة ولا تجمع بيانات شخصية غير لازمة. لا تعتبر عنوان العميل موقع الطلب تلقائياً. سجّل الحقائق المؤكدة ووضّح المعلومات غير المؤكدة ولا تفترض عنواناً أو مهلة أو حلاً."
+        }
+      },
+      {
+        "key": "create_case", "macro": "new_case",
+        "title": {"en": "New case form: review then save", "ar": "نموذج بلاغ جديد: المراجعة ثم الحفظ"},
+        "instruction": {"en": "Opens an unsaved native form, using confirmed customer defaults when available. Review Customer and Details > Service request details, issue, priority and duplicates before deliberate manual saving. Populate location fields only when relevant. Never retry a reported creation failure until the existing case lookup is checked.", "ar": "يفتح نموذجاً أصلياً غير محفوظ ويستخدم القيم المرتبطة بالعميل المؤكد عند توفره. راجع العميل والتفاصيل وطلب الخدمة والمشكلة والأولوية والتكرار قبل الحفظ اليدوي. أدخل الموقع فقط عند الحاجة. لا تعاود الإنشاء عند ظهور فشل قبل التحقق من وجود الحالة."}
+      },
+      {
+        "key": "link_case", "macro": "link_case",
+        "title": {"en": "Link confirmed saved case (live call only)", "ar": "ربط البلاغ المحفوظ المؤكد أثناء المكالمة فقط"},
+        "instruction": {"en": "EXPLICIT association change, only while the conversation is live, before hanging up. Focus the confirmed SAVED case in that same conversation; do not switch sessions. The action may refuse when the case is not focused or live context is absent. Do not use during wrap-up or on a closed conversation, and do not bypass the guard by rewriting history. Verify the native Case lookup afterward. This does not save, resolve or create a case.", "ar": "هذا تغيير صريح للارتباط أثناء المحادثة الحية فقط وقبل إنهاء الاتصال. ركز على البلاغ المحفوظ والمؤكد داخل المحادثة نفسها ولا تبدّل الجلسة. قد يرفض الإجراء عند عدم التركيز على البلاغ أو غياب السياق الحي. لا تستخدمه أثناء الختام أو بعد إغلاق المحادثة ولا تتجاوز الحماية بتعديل السجل. تحقق من حقل البلاغ الأصلي بعده. لا يحفظ البلاغ ولا يحله ولا ينشئه."}
+      },
+      {
+        "key": "knowledge",
+        "title": {"en": "Use approved knowledge and Copilot sources", "ar": "استخدام المعرفة المعتمدة ومصادر Copilot"},
+        "instruction": {
+          "en": "Native Knowledge search can find published English and Arabic guidance. Copilot sources and replies follow the current UI language; Arabic grounding requires an Arabic UI after provisioning. Check citations and applicability. KB source enablement does not configure live-case queries. Do not invent policy or deadlines; record unanswered questions for follow-up.",
+          "ar": "يتيح البحث الأصلي الاطلاع على الإرشادات المنشورة بالإنجليزية والعربية. تتبع مصادر Copilot وردوده لغة الواجهة الحالية؛ تتطلب المصادر العربية واجهة عربية بعد تمكينها. راجع الاستشهادات ومدى انطباقها. تمكين مصدر المعرفة لا يهيئ الاستعلام عن البلاغات الحية. لا تفترض سياسة أو مهلة وسجّل الأسئلة غير المحسومة للمتابعة."
+        }
+      },
+      {
+        "key": "knowledge_tab", "macro": "knowledge_search",
+        "title": {"en": "Open native knowledge search", "ar": "فتح بحث المعرفة الأصلي"},
+        "instruction": {"en": "Search and review only when an approved knowledge package is available. Select Published, Internal or Both, and the intended article language. Save personal defaults if needed, not organization-wide filters. Use terms relevant to the request. No article, message or email is sent.", "ar": "ابحث وراجع فقط عند توفر محتوى معرفي معتمد. اختر منشور وداخلي أو كلاهما ولغة المقال المطلوبة. احفظ تفضيلاتك الشخصية عند الحاجة دون تغيير عوامل المؤسسة. استخدم مصطلحات مناسبة للطلب. لا يرسل مقالاً أو رسالة أو بريداً."}
+      },
+      {
+        "key": "notes",
+        "title": {"en": "Append case timeline note", "ar": "إضافة ملاحظة إلى سجل البلاغ"},
+        "instruction": {
+          "en": "On the confirmed case use Timeline > Add note. Append the reported issue, confirmed location, checks, actions, pending work and agreed next step. Preserve older notes. Review before saving. Correct only verified errors; never replace the case history with an unreviewed AI summary.",
+          "ar": "في البلاغ المؤكد استخدم المخطط الزمني ثم إضافة ملاحظة. أضف المشكلة والموقع المؤكد والتحقق والإجراءات والعمل المعلق والخطوة التالية المتفق عليها. احتفظ بالملاحظات السابقة وراجع النص قبل الحفظ. صحح الأخطاء المؤكدة فقط ولا تستبدل سجل البلاغ بملخص آلي غير مراجع."
+        }
+      },
+      {
+        "key": "task", "macro": "followup_task",
+        "title": {"en": "Prepare follow-up task", "ar": "إعداد مهمة متابعة"},
+        "instruction": {"en": "Focus the saved case first. Review Regarding, subject, owner and agreed due date, then save manually. Sends no email, call or automatic follow-up.", "ar": "ركز على البلاغ المحفوظ أولاً. راجع الارتباط والموضوع والمسؤول والموعد المتفق عليه ثم احفظ يدوياً. لا يرسل بريداً ولا يجري اتصالاً أو متابعة آلية."}
+      },
+      {
+        "key": "refresh", "macro": "refresh_tab",
+        "title": {"en": "Refresh saved case/tab", "ar": "تحديث البلاغ أو التبويب المحفوظ"},
+        "instruction": {"en": "This is the Refresh saved case/tab action. Save or discard pending edits first. It refreshes the focused tab; it does not save, close or resolve a case, or prove that cached voice-session associations have changed.", "ar": "هذا إجراء تحديث البلاغ أو التبويب المحفوظ. احفظ التعديلات المعلقة أو تجاهلها أولاً. يحدّث التبويب المحدد ولا يحفظ البلاغ أو يغلقه أو يحله ولا يثبت تحديث ارتباطات الجلسة الصوتية المخزنة مؤقتاً."}
+      },
+      {
+        "key": "wrapup", "route": "wrapup_script",
+        "title": {"en": "Call wrap-up checklist", "ar": "قائمة ختام المكالمة"},
+        "instruction": {"en": "Switch to the same-language wrap-up checklist. Does not end the call or resolve the case.", "ar": "انتقل إلى قائمة الختام باللغة نفسها. لا ينهي المكالمة ولا يحل البلاغ."}
+      }
+    ]
+  },
+  "case_script": {
+    "title": {"en": "02 Case handling / معالجة البلاغ", "ar": "02 معالجة البلاغ / Case handling"},
+    "steps": [
+      {
+        "key": "verify",
+        "title": {"en": "Review real case and customer", "ar": "مراجعة البلاغ والعميل الفعليين"},
+        "instruction": {"en": "Verify case number, customer, status and timeline. Check the native summary against fields and history. A summary is a suggestion, not verified evidence. Do not modify contact details as part of this workflow.", "ar": "تحقق من رقم البلاغ والعميل والحالة والمخطط الزمني. قارن الملخص الأصلي بالحقول والسجل. الملخص اقتراح لا دليل مؤكد. لا تعدّل بيانات الاتصال ضمن هذا الإجراء."}
+      },
+      {
+        "key": "incident",
+        "title": {"en": "Confirm incident location", "ar": "تأكيد موقع البلاغ"},
+        "instruction": {"en": "Use Details > Service request details. Category and the optional location columns are existing CRM fields, not address notes. Check stored values before changes. Collect location only when the configured service requires it. A contact address is not automatically the request location; preserve uncertainty.", "ar": "استخدم التفاصيل ثم تفاصيل طلب الخدمة. التصنيف وحقول الموقع الاختيارية حقول موجودة في النظام وليست ملاحظات عنوان. تحقق من القيم المحفوظة قبل تعديلها. اطلب الموقع فقط عند حاجة الخدمة إليه. عنوان العميل ليس موقع الطلب تلقائياً؛ وضّح المعلومات غير المؤكدة."}
+      },
+      {
+        "key": "knowledge", "macro": "knowledge_search",
+        "title": {"en": "Open native knowledge search", "ar": "فتح بحث المعرفة الأصلي"},
+        "instruction": {"en": "If approved organization knowledge is configured, select Published, Internal or Both, and the intended article language. Template-published articles are internal. Review citations and do not promise unverified policies or deadlines. Knowledge search is not a live case query.", "ar": "عند توفر معرفة معتمدة للمؤسسة اختر منشور وداخلي أو كلاهما ولغة المقال المطلوبة. المقالات المنشورة بهذه الآلية داخلية. راجع الاستشهادات ولا تعد بسياسات أو مهل غير متحقق منها. البحث المعرفي ليس استعلاماً حياً عن الحالات."}
+      },
+      {
+        "key": "append_note",
+        "title": {"en": "Append confirmed case notes", "ar": "إضافة ملاحظات البلاغ المؤكدة"},
+        "instruction": {"en": "Use the native timeline to append verified facts, work performed and next steps. Keep historic notes intact. Correct confirmed fields through the native form and save deliberately. Do not replace the original narrative with an unreviewed summary.", "ar": "أضف عبر المخطط الزمني الحقائق المؤكدة والعمل المنفذ والخطوات التالية مع الحفاظ على الملاحظات السابقة. صحح الحقول المؤكدة عبر النموذج الأصلي واحفظ عمداً. لا تستبدل الوصف الأصلي بملخص غير مراجع."}
+      },
+      {
+        "key": "task", "macro": "followup_task",
+        "title": {"en": "Prepare follow-up task", "ar": "إعداد مهمة متابعة"},
+        "instruction": {"en": "Focus the saved case. Review Regarding, owner and agreed due date before manual saving; sends nothing.", "ar": "ركز على البلاغ المحفوظ وراجع الارتباط والمسؤول والموعد المتفق عليه قبل الحفظ اليدوي؛ لا يرسل شيئاً."}
+      },
+      {
+        "key": "refresh", "macro": "refresh_tab",
+        "title": {"en": "Refresh saved case/tab", "ar": "تحديث البلاغ أو التبويب المحفوظ"},
+        "instruction": {"en": "Save or discard pending edits first. Refresh does not resolve a case.", "ar": "احفظ التعديلات أو تجاهلها أولاً. التحديث لا يحل البلاغ."}
+      },
+      {
+        "key": "context", "macro": "refresh_case_context",
+        "title": {"en": "Refresh case-session context", "ar": "تحديث سياق جلسة البلاغ"},
+        "instruction": {"en": "Use only in the case entity session after saving so later macros see current anchor values. Do not use for a voice-conversation anchor.", "ar": "استخدمه في جلسة كيان البلاغ فقط بعد الحفظ لتحديث سياق المرساة للخطوات اللاحقة، لا في مرساة المحادثة الصوتية."}
+      },
+      {
+        "key": "summary",
+        "title": {"en": "Review the native case summary", "ar": "مراجعة ملخص البلاغ الأصلي"},
+        "instruction": {"en": "Case summary uses configured case fields and linked activities/notes, not every open conversation. A short description with no related history can legitimately be insufficient; do not pad facts to force generation. Review the separate closed-call summary in Activities > Conversations > the conversation > Summary. Compare both against their actual sources and current UI language.", "ar": "يستخدم ملخص البلاغ حقول البلاغ المهيأة والأنشطة والملاحظات المرتبطة، لا كل محادثة مفتوحة. قد لا يكفي وصف قصير بلا سجل مرتبط؛ لا تضف معلومات لفرض إنشاء الملخص. راجع ملخص المكالمة المغلقة منفصلاً عبر الأنشطة ثم المحادثات ثم المحادثة ثم الملخص. قارن كليهما بمصادرهما الفعلية ولغة الواجهة."}
+      },
+      {
+        "key": "status",
+        "title": {"en": "Preserve case lifecycle", "ar": "الحفاظ على دورة حياة البلاغ"},
+        "instruction": {"en": "Save the agreed next action and task. Leave the case in its correct existing state while work remains. Call completion is not case resolution. Use the separately approved native resolution process only after actual resolution. No workspace macro resolves a case.", "ar": "احفظ الخطوة التالية والمهمة المتفق عليهما. أبقِ البلاغ في حالته الصحيحة ما دام العمل معلقاً. انتهاء المكالمة لا يعني حل البلاغ. استخدم عملية الحل الأصلية المعتمدة منفصلةً بعد المعالجة الفعلية فقط. لا يحل أي ماكرو هنا البلاغات."}
+      }
+    ]
+  },
+  "wrapup_script": {
+    "title": {"en": "03 Call wrap-up / ختام المكالمة", "ar": "03 ختام المكالمة / Call wrap-up"},
+    "steps": [
+      {
+        "key": "recap",
+        "title": {"en": "Confirm outcome with caller", "ar": "تأكيد النتيجة مع المتصل"},
+        "instruction": {"en": "Recap the confirmed case number, incident location, action, pending work and agreed next step. Do not promise callbacks, email or deadlines unless explicitly agreed and recorded through the separately approved process.", "ar": "لخّص رقم البلاغ المؤكد وموقعه والإجراء والعمل المعلق والخطوة التالية. لا تعد باتصال أو بريد أو مهلة إلا إذا اتُّفق عليها صراحةً وسُجلت ضمن الإجراء المعتمد المنفصل."}
+      },
+      {
+        "key": "handover",
+        "title": {"en": "Review transfer/join summary", "ar": "مراجعة ملخص التسليم والانضمام"},
+        "instruction": {"en": "If handing over, compare the native summary to the transcript and linked case. Append verified missing facts in a timeline note. AI-agent-only dialogue may be omitted. Do not initiate a transfer merely to test summaries.", "ar": "عند التسليم قارن الملخص الأصلي بالنص والبلاغ المرتبط. أضف الحقائق الناقصة المؤكدة في ملاحظة بالسجل. قد يُستثنى حوار المساعد الآلي. لا تجرِ تحويلاً لمجرد اختبار الملخص."}
+      },
+      {
+        "key": "save",
+        "title": {"en": "Save notes and agreed follow-up", "ar": "حفظ الملاحظات والمتابعة المتفق عليها"},
+        "instruction": {"en": "Confirm Customer and Case lookups are genuinely associated. Save the timeline note and agreed task and check owner/due date. Open tabs are not linkage. No email, outbound call or automatic case-resolution action is included.", "ar": "أكد الارتباط الفعلي لحقلي العميل والبلاغ. احفظ الملاحظة والمهمة المتفق عليها وراجع المسؤول والموعد. التبويبات المفتوحة ليست ربطاً. لا يتضمن المسار بريداً أو اتصالاً صادراً أو حلاً آلياً للبلاغ."}
+      },
+      {
+        "key": "end",
+        "title": {"en": "End call and complete native wrap-up", "ar": "إنهاء المكالمة وإكمال الختام الأصلي"},
+        "instruction": {"en": "When the caller is finished, use native call controls, then complete native conversation wrap-up/disposition. After closure use Activities > Conversations > the conversation > Summary; generation can be asynchronous. Review the actual transcript to separate AI-phase and human-phase coverage. Close only the appropriate conversation/session; keep unresolved cases open. No script or macro ends calls or resolves cases automatically.", "ar": "بعد انتهاء المتصل استخدم عناصر التحكم الأصلية ثم أكمل ختام المحادثة. بعد الإغلاق افتح الأنشطة ثم المحادثات ثم المحادثة ثم الملخص؛ قد يتأخر إنشاء الملخص. راجع النص الفعلي للتمييز بين تغطية مرحلة المساعد الآلي ومرحلة الممثل البشري. أغلق المحادثة أو الجلسة المناسبة فقط واترك البلاغ غير المحلول مفتوحاً. لا ينهي أي نص أو ماكرو المكالمات ولا يحل البلاغات آلياً."}
+      }
+    ]
+  }
+}

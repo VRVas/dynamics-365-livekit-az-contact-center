@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "organization_url": "https://YOUR-ORGANIZATION.crm.dynamics.com",
+  "tenant_id": "REPLACE_WITH_TENANT_UUID",
+  "namespace_id": "REPLACE_WITH_NEW_OWNERSHIP_NAMESPACE_UUID",
+  "business_unit_id": "REPLACE_WITH_RUNTIME_AND_OPERATOR_BUSINESS_UNIT_UUID",
+  "runtime_user_id": "REPLACE_WITH_EXISTING_VOICE_APPLICATION_USER_UUID",
+  "runtime_application_id": "REPLACE_WITH_EXISTING_VOICE_IDENTITY_CLIENT_UUID",
+  "approved_actor_ids": ["REPLACE_WITH_EXISTING_APPROVED_HUMAN_UUID"],
+  "controller_component_ids": ["REPLACE_WITH_RETAINED_NATIVE_CONTROLLER_COMPONENT_UUID"],
+  "workstream_ids": ["REPLACE_WITH_APPROVED_NATIVE_VOICE_WORKSTREAM_UUID"],
+  "voice_origin": "https://YOUR-VOICE-APP.azurecontainerapps.io",
+  "session_template_ids": [],
+  "session_binding_reviewed": false,
+  "trust_system_administrators": false
+}

@@ -1,0 +1,32 @@
+name: moacc-contact-center
+description: >
+  Configurable contact-center coordinator using Microsoft Agent Framework, with optional
+  approved knowledge, CRM and email specialists.
+metadata:
+  tags:
+    - Agent Framework
+    - Contact Center
+    - AI Agent Hosting
+    - Responses Protocol
+    - Streaming
+template:
+  name: moacc-contact-center
+  kind: hosted
+  protocols:
+    - protocol: responses
+      version: 1.0.0
+  environment_variables:
+    - name: AZURE_AI_MODEL_DEPLOYMENT_NAME
+      value: "{{AZURE_AI_MODEL_DEPLOYMENT_NAME}}"
+    - name: ASSIST_BASE_URL
+      value: "{{ASSIST_BASE_URL}}"
+    - name: ASSIST_INGEST_KEY
+      value: "{{ASSIST_INGEST_KEY}}"
+    - name: ACS_EMAIL_CONNECTION_STRING
+      value: "{{ACS_EMAIL_CONNECTION_STRING}}"
+    - name: ACS_EMAIL_SENDER
+      value: "{{ACS_EMAIL_SENDER}}"
+resources:
+  - kind: model
+    id: gpt-5.4-mini
+    name: AZURE_AI_MODEL_DEPLOYMENT_NAME

@@ -1,0 +1,11 @@
+<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="ar-SA">
+  <!-- Synthesize this base text, then process the WAV with ffmpeg atempo=1.3. -->
+  <voice name="ar-SA-ZariyahNeural">
+    يتم تسجيل هذه المكالمة لأغراض الجودة والتدريب.
+    <break time="300ms" />
+  </voice>
+  <voice name="en-US-JennyNeural">
+    This call is recorded for quality and training purposes.
+    <break time="600ms" />
+  </voice>
+</speak>

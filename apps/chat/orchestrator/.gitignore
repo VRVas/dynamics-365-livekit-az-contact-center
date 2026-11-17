@@ -1,0 +1,16 @@
+# Python venv + caches
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Secrets / local env (never commit)
+.env
+
+# Logs + Foundry local cache
+*.log
+.foundry/

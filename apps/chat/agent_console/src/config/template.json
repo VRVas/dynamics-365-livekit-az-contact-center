@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "brand": {
+    "name": { "en": "Contact center", "ar": "مركز الخدمة" },
+    "assistantName": { "en": "Assistant", "ar": "المساعد" },
+    "logoUrl": null,
+    "colors": { "primary": "#0f766e", "accent": "#38bdf8" },
+    "layout": "split"
+  },
+  "locale": { "default": "en", "supported": ["en", "ar"], "dialingCountryCode": "" },
+  "features": { "chat": true, "voice": false, "phone": false, "profiles": false, "agentConsole": false, "agentAssist": false },
+  "welcome": {
+    "title": { "en": "How can we help?", "ar": "كيف يمكننا مساعدتك؟" },
+    "description": { "en": "", "ar": "" }
+  },
+  "quickActions": []
+}

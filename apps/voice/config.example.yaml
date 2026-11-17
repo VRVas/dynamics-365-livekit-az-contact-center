@@ -1,0 +1,15 @@
+# Example for the legacy src/app/config loader. The voice service doesn't read
+# this file: it uses src/app/deployment.json and environment settings (README.md).
+# Do not put credentials, real recipients or customer records in this file.
+
+conversation:
+  agent_phone_number: ""
+  bot_company: "Contact center"
+  bot_name: "Assistant"
+  bot_phone_number: ""
+
+acs_connection_string: ""
+acs_callback_url: ""
+acs_media_streaming_url: ""
+enable_call_recording: false
+max_transfer_retries: 3

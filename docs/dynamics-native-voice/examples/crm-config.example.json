@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "organization_url": "https://YOUR-ORGANIZATION.crm.dynamics.com",
+  "tenant_id": "<tenant UUID>",
+  "business_unit_id": "<existing Dataverse business-unit UUID>",
+  "deployment_key": "service-crm",
+  "native_voice": false,
+  "case_categories": ["general"],
+  "location_required": false,
+  "managed_identity": {
+    "resource_id": "/subscriptions/<subscription UUID>/resourceGroups/<resource-group>/providers/Microsoft.ManagedIdentity/userAssignedIdentities/<existing CRM identity name>",
+    "client_id": "<CRM managed-identity client UUID>",
+    "principal_id": "<CRM managed-identity principal object UUID>"
+  },
+  "native_reader_client_id": "",
+  "workstream_ids": []
+}

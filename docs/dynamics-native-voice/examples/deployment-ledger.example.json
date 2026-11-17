@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Private progress index for the AI-led deployment; component journals remain authoritative.",
+  "target": {
+    "azdEnvironment": "<new-environment-name>",
+    "tenantId": "<Dynamics-Entra-tenant-UUID>",
+    "subscriptionId": "<same-tenant-Azure-subscription-UUID>",
+    "organizationUrl": "https://<organization>.crm<number>.dynamics.com",
+    "privateWorkspace": "<absolute-path-outside-checkout>"
+  },
+  "source": {
+    "commit": "<reviewed-commit>",
+    "reviewedWorkingTreeManifest": null,
+    "imageReceipts": []
+  },
+  "currentStage": 0,
+  "status": "pending",
+  "stageRecords": [],
+  "stageRecordFormat": {
+    "stage": "<integer-0-through-12>",
+    "status": "<pending|awaiting-human|in-progress|verified|blocked>",
+    "approvalReference": null,
+    "startedAtUtc": null,
+    "verifiedAtUtc": null,
+    "evidencePaths": [],
+    "unresolvedOperation": null,
+    "nextAction": "<one-specific-action>"
+  },
+  "componentReceipts": {
+    "crm": null,
+    "topicBundle": null,
+    "startupAudio": null,
+    "workspace": null,
+    "supervision": null,
+    "workspaceSupervisionExtension": null,
+    "runtimeIdentityPreflight": null
+  },
+  "propagation": {
+    "lastNativeConfigurationReadbackAtUtc": null,
+    "callerAcceptanceNotBeforeUtc": null
+  },
+  "acceptance": {
+    "configuration": "not-tested",
+    "representativeUi": "not-tested",
+    "recordedCallerTest": "not-tested",
+    "pauseAiAndNonAdminPermissions": "not-tested"
+  },
+  "knownLimits": [
+    "5-7 second first-notice delay is work in progress and on hold",
+    "One concurrent native AI call and a 20-minute active AI phase",
+    "Check automatic case selection and linking in the Case Details panel"
+  ],
+  "secretLocations": [],
+  "secretsMustNotBeStoredInThisLedger": true
+}

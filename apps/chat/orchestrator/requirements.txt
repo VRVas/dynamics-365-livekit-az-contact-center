@@ -1,0 +1,18 @@
+# Hosted agent dependencies, pinned for Foundry direct-code remote_build (buildpack runs `pip install`, no --pre).
+# Exact tested versions so the prerelease packages install deterministically.
+agent-framework-core==1.8.0
+agent-framework-foundry==1.8.0
+agent-framework-foundry-hosting==1.0.0a260604
+azure-ai-agentserver-core==2.0.0b5
+azure-ai-agentserver-responses==1.0.0b7
+azure-ai-agentserver-invocations==1.0.0b4
+azure-identity==1.26.0b2
+azure-communication-email==1.0.0
+pydantic==2.14.0a1
+httpx==0.28.1
+aiohttp==3.14.0
+python-dotenv==1.2.2
+mcp==1.27.2
+# API (FastAPI proxy) extras — used by Dockerfile.api / app.py (ui_v2-facing service).
+fastapi==0.136.3
+uvicorn[standard]==0.49.0

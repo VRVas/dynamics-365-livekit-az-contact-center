@@ -1,0 +1,8 @@
+# Keep the azd/Docker build context small (the image rebuilds deps via pip).
+__pycache__
+**/__pycache__
+*.pyc
+*.pyo
+.env
+.venv
+*.log

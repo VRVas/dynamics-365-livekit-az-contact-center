@@ -1,0 +1,17 @@
+{
+  "name": "moacc-native-rtc",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc --noEmit && esbuild gateway.ts --bundle --platform=browser --format=iife --outfile=dist/gateway.bundle.js",
+    "test": "esbuild pcm.ts pause.ts --platform=node --format=esm --outdir=dist --out-extension:.js=.mjs && node --test pcm.test.mjs pause.test.mjs ../../../../tests/native_supervision_ui.test.cjs"
+  },
+  "dependencies": {
+    "@azure/communication-calling": "1.46.1",
+    "@azure/communication-common": "2.5.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "typescript": "5.9.3"
+  }
+}

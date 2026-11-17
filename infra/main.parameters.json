@@ -1,0 +1,186 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "${AZURE_LOCATION=swedencentral}"
+    },
+    "hostingLocation": {
+      "value": "${APP_LOCATION=swedencentral}"
+    },
+    "communicationsDataLocation": {
+      "value": "${ACS_DATA_LOCATION=Europe}"
+    },
+    "searchLocation": {
+      "value": "${SEARCH_LOCATION=}"
+    },
+    "cosmosLocation": {
+      "value": "${COSMOS_LOCATION=swedencentral}"
+    },
+    "environmentName": {
+      "value": "${AZURE_ENV_NAME=moacc}"
+    },
+    "resourceGroupName": {
+      "value": "${AZURE_RESOURCE_GROUP=rg-moacc}"
+    },
+    "foundryAccountName": {
+      "value": "${FOUNDRY_ACCOUNT_BASE_NAME=aif-moacc}"
+    },
+    "foundryProjectName": {
+      "value": "${FOUNDRY_PROJECT_NAME=moacc}"
+    },
+    "developerPrincipalId": {
+      "value": "${AZURE_PRINCIPAL_ID}"
+    },
+    "modelDeploymentName": {
+      "value": "${AZURE_AI_MODEL_DEPLOYMENT_NAME=gpt-5.4-mini}"
+    },
+    "assistModelDeploymentName": {
+      "value": "${ASSIST_MODEL_DEPLOYMENT_NAME=gpt-4.1-mini}"
+    },
+    "insightsModelDeploymentName": {
+      "value": "${INSIGHTS_MODEL_DEPLOYMENT_NAME=gpt-5.4-nano}"
+    },
+    "enableFoundryIq": {
+      "value": "${ENABLE_FOUNDRY_IQ=false}"
+    },
+    "deployWebChat": {
+      "value": "${DEPLOY_WEB_CHAT=true}"
+    },
+    "deployBrowserVoice": {
+      "value": "${DEPLOY_BROWSER_VOICE=false}"
+    },
+    "deployApplicationPhone": {
+      "value": "${DEPLOY_APPLICATION_PHONE=false}"
+    },
+    "deployNativeVoice": {
+      "value": "${DEPLOY_NATIVE_VOICE=false}"
+    },
+    "deployCrm": {
+      "value": "${DEPLOY_CRM=false}"
+    },
+    "deployEmail": {
+      "value": "${DEPLOY_EMAIL=false}"
+    },
+    "deployAgentConsole": {
+      "value": "${DEPLOY_AGENT_CONSOLE=false}"
+    },
+    "deployAgentAssist": {
+      "value": "${DEPLOY_AGENT_ASSIST=false}"
+    },
+    "foundryAgentName": {
+      "value": "${FOUNDRY_AGENT_NAME=moacc-contact-center}"
+    },
+    "foundryIqMode": {
+      "value": "${FOUNDRY_IQ_MODE=indexed}"
+    },
+    "orchestratorImage": {
+      "value": "${SERVICE_ORCHESTRATOR_API_IMAGE_NAME=mcr.microsoft.com/azuredocs/containerapps-helloworld:latest}"
+    },
+    "uiImage": {
+      "value": "${SERVICE_UI_V2_IMAGE_NAME=mcr.microsoft.com/azuredocs/containerapps-helloworld:latest}"
+    },
+    "assistImage": {
+      "value": "${SERVICE_ASSIST_IMAGE_NAME=mcr.microsoft.com/azuredocs/containerapps-helloworld:latest}"
+    },
+    "agentConsoleImage": {
+      "value": "${SERVICE_AGENT_CONSOLE_IMAGE_NAME=mcr.microsoft.com/azuredocs/containerapps-helloworld:latest}"
+    },
+    "ingestApiKey": {
+      "value": "${INGEST_API_KEY=}"
+    },
+    "voiceImage": {
+      "value": "${SERVICE_VOICE_IMAGE_NAME=mcr.microsoft.com/azuredocs/containerapps-helloworld:latest}"
+    },
+    "humainAuthorization": {
+      "value": "${HUMAIN_AUTHORIZATION=}"
+    },
+    "humainTokenEndpoint": {
+      "value": "${HUMAIN_TOKEN_ENDPOINT=https://livekit-admin.sanad.ink/api/tokens/client}"
+    },
+    "humainVoice": {
+      "value": "${HUMAIN_VOICE=mul_nourah}"
+    },
+    "humainAsrModel": {
+      "value": "${HUMAIN_ASR_MODEL=bayan_playground}"
+    },
+    "humainLlmProvider": {
+      "value": "${HUMAIN_LLM_PROVIDER=gemma4}"
+    },
+    "humainInterruptionPolicyMode": {
+      "value": "${HUMAIN_INTERRUPTION_POLICY_MODE=off}"
+    },
+    "humainTurnTakingStrategy": {
+      "value": "${HUMAIN_TURN_TAKING_STRATEGY=fast_vad}"
+    },
+    "acsSourceNumber": {
+      "value": "${ACS_SOURCE_NUMBER=}"
+    },
+    "acsAutoConferenceEnabled": {
+      "value": "${ACS_AUTO_CONFERENCE_ENABLED=false}"
+    },
+    "acsAutoConferenceNumber": {
+      "value": "${ACS_AUTO_CONFERENCE_NUMBER=}"
+    },
+    "dynamicsOrgUrl": {
+      "value": "${DYNAMICS_ORG_URL=}"
+    },
+    "dynamicsOutboundConfigId": {
+      "value": "${DYNAMICS_OUTBOUND_CONFIG_ID=}"
+    },
+    "dynamicsOutboundEnabled": {
+      "value": "${DYNAMICS_OUTBOUND_ENABLED=false}"
+    },
+    "dynamicsOutboundApiKey": {
+      "value": "${DYNAMICS_OUTBOUND_API_KEY=}"
+    },
+    "dynamicsNativeProbeResourceId": {
+      "value": "${DYNAMICS_NATIVE_PROBE_RESOURCE_ID=}"
+    },
+    "dynamicsNativeProbeExpiresAt": {
+      "value": "${DYNAMICS_NATIVE_PROBE_EXPIRES_AT=}"
+    },
+    "dynamicsNativeProbePermanent": {
+      "value": "${DYNAMICS_NATIVE_PROBE_PERMANENT=false}"
+    },
+    "dynamicsNativeProbeApiKey": {
+      "value": "${DYNAMICS_NATIVE_PROBE_API_KEY=}"
+    },
+    "dynamicsNativeMediaEnabled": {
+      "value": "${DYNAMICS_NATIVE_MEDIA_ENABLED=false}"
+    },
+    "dynamicsNativeMediaTransport": {
+      "value": "${DYNAMICS_NATIVE_MEDIA_TRANSPORT=callautomation}"
+    },
+    "dynamicsNativeMediaFastStart": {
+      "value": "${DYNAMICS_NATIVE_MEDIA_FAST_START=false}"
+    },
+    "dynamicsNativeMediaWorkstreamId": {
+      "value": "${DYNAMICS_NATIVE_MEDIA_WORKSTREAM_ID=}"
+    },
+    "dynamicsNativeMediaAdditionalWorkstreamIds": {
+      "value": "${DYNAMICS_NATIVE_MEDIA_ADDITIONAL_WORKSTREAM_IDS=}"
+    },
+    "dynamicsNativeSupervisionEnabled": {
+      "value": "${DYNAMICS_NATIVE_SUPERVISION_ENABLED=false}"
+    },
+    "dynamicsNativeSupervisionActorIds": {
+      "value": "${DYNAMICS_NATIVE_SUPERVISION_ACTOR_IDS=}"
+    },
+    "dynamicsNativeSupervisionControllers": {
+      "value": "${DYNAMICS_NATIVE_SUPERVISION_CONTROLLERS=[]}"
+    },
+    "dynamicsNativeMediaApiKey": {
+      "value": "${DYNAMICS_NATIVE_MEDIA_API_KEY=}"
+    },
+    "dynamicsNativeMediaAcsConnectionString": {
+      "value": "${DYNAMICS_NATIVE_MEDIA_ACS_CONNECTION_STRING=}"
+    },
+    "agentPhoneNumber": {
+      "value": "${AGENT_PHONE_NUMBER=}"
+    },
+    "acsConnectionString": {
+      "value": "${ACS_CONNECTION_STRING=}"
+    }
+  }
+}

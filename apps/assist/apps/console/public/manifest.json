@@ -1,0 +1,8 @@
+{
+  "name": "Agent Assist Console",
+  "short_name": "AgentAssist",
+  "icons": [],
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "display": "standalone"
+}

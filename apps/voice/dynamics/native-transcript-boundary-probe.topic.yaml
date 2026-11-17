@@ -1,0 +1,71 @@
+kind: AdaptiveDialog
+beginDialog:
+  kind: OnRedirect
+  id: main
+  actions:
+    - kind: SendActivity
+      id: transcript_probe_begin
+      activity:
+        text:
+          - This is an automated transcript diagnostic.
+        speak:
+          - This is an automated transcript diagnostic.
+
+    - kind: SendActivity
+      id: transcript_probe_different_speech
+      activity:
+        text:
+          - Display alpha.
+        speak:
+          - Spoken bravo.
+
+    - kind: SetVariable
+      id: transcript_probe_dynamic_value
+      variable: Topic.TranscriptProbeText
+      value: Dynamic charlie.
+
+    - kind: SendActivity
+      id: transcript_probe_dynamic_speech
+      activity:
+        text:
+          - "{Topic.TranscriptProbeText}"
+        speak:
+          - "{Topic.TranscriptProbeText}"
+
+    - kind: SendActivity
+      id: transcript_probe_display_only
+      activity:
+        text:
+          - Display delta.
+        speak:
+          - <break time="20ms" />
+
+    - kind: SendActivity
+      id: transcript_probe_muted_words
+      activity:
+        text:
+          - Muted echo.
+        speak:
+          - <prosody volume="silent">Muted echo.</prosody>
+
+    - kind: SendActivity
+      id: transcript_probe_microphone_window
+      activity:
+        text:
+          - Waiting for the owned microphone diagnostic.
+        speak:
+          - <break time="20000ms" />
+
+    - kind: SendActivity
+      id: transcript_probe_finish
+      activity:
+        text:
+          - The transcript diagnostic is complete.
+        speak:
+          - The transcript diagnostic is complete.
+
+    - kind: EndConversation
+      id: transcript_probe_end_call
+
+inputType: {}
+outputType: {}

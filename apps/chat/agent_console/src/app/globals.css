@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+:root {
+  --brand-primary: #0f766e;
+  --brand-accent: #38bdf8;
+  --brand-on-primary: #ffffff;
+  --brand-primary-rgb: 15 118 110;
+  --brand-accent-rgb: 56 189 248;
+  --foreground-rgb: 237, 237, 242;
+  --bg: 7, 7, 9;
+}
+
+html,
+body {
+  min-height: 100vh;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgb(var(--brand-primary-rgb) / 0.1), transparent 60%),
+    radial-gradient(900px 500px at 0% 110%, rgb(var(--brand-accent-rgb) / 0.06), transparent 55%),
+    rgb(var(--bg));
+  background-attachment: fixed;
+}
+
+/* Command-center grid backdrop */
+.cc-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Dark glass surfaces */
+.glass {
+  background: rgba(20, 20, 26, 0.72);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-brand {
+  background: linear-gradient(180deg, rgb(var(--brand-primary-rgb) / 0.14), rgba(20, 20, 26, 0.6));
+  border: 1px solid rgb(var(--brand-primary-rgb) / 0.35);
+}
+
+.btn-brand {
+  background: var(--brand-primary);
+  color: var(--brand-on-primary);
+  box-shadow: 0 6px 18px -6px rgb(var(--brand-primary-rgb) / 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+.btn-brand:hover {
+  filter: brightness(1.08);
+}
+.btn-brand:active {
+  transform: translateY(1px);
+}
+
+/* Custom scrollbar */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgb(var(--brand-primary-rgb) / 0.35);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--brand-primary-rgb) / 0.6);
+  background-clip: padding-box;
+}
+
+/* Typing indicator dots */
+.typing-dot {
+  animation: typing 1.2s infinite ease-in-out;
+}
+.typing-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.typing-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes typing {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+/* Markdown table styling inside chat bubbles */
+.md-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.5rem 0;
+  font-size: 0.78rem;
+}
+.md-body th,
+.md-body td {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 6px 10px;
+  text-align: start;
+}
+.md-body th {
+  background: rgb(var(--brand-primary-rgb) / 0.18);
+  font-weight: 600;
+}
+.md-body tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; }

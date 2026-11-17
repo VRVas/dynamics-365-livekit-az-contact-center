@@ -1,0 +1,3 @@
+PyYAML>=6.0,<7.0
+python-dotenv==1.0.1
+azure-communication-phonenumbers==1.4.0

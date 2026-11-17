@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "organization": {
+    "name": "Contact center",
+    "assistantName": "Assistant",
+    "defaultLanguage": "en",
+    "timeZone": "UTC",
+    "greeting": {"en": "Hello. How can I help?", "ar": "مرحباً. كيف يمكنني مساعدتك؟"}
+  },
+  "features": {
+    "crm": false,
+    "knowledge": false,
+    "email": false,
+    "agentAssist": false,
+    "applicationTelephony": false,
+    "browserVoice": false,
+    "nativeVoice": false,
+    "agentConsole": false
+  },
+  "business": {"caseCategories": ["general"], "locationRequired": false, "city": ""},
+  "knowledge": {"allowedDomains": []},
+  "emailPolicy": {"allowedRecipients": [], "allowedDomains": []},
+  "phonePolicy": {"allowedOutboundNumbers": []}
+}

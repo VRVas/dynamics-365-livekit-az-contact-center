@@ -1,0 +1,74 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+# Service catalog. template_setup.py prepares a private manifest containing only selected services.
+name: contact-center-template
+metadata:
+  template: contact-center-template@1.0.0
+
+infra:
+  provider: bicep
+  path: infra
+  module: main
+
+# Hooks run Python through infra/scripts/hook_python.sh. Set the interpreter once per
+# environment: azd env set PYTHON <venv>/bin/python
+hooks:
+  preprovision:
+    shell: sh
+    run: sh infra/scripts/hook_python.sh infra/scripts/template_setup.py gate --phase provision
+    continueOnError: false
+  predeploy:
+    shell: sh
+    run: sh infra/scripts/hook_python.sh infra/scripts/template_setup.py gate --phase deploy && sh infra/scripts/hook_python.sh infra/scripts/sync_prompt_knowledge.py --check
+    continueOnError: false
+  prepackage:
+    shell: sh
+    run: sh infra/scripts/hook_python.sh infra/scripts/template_setup.py gate --phase package && sh infra/scripts/hook_python.sh infra/scripts/sync_prompt_knowledge.py --check
+    continueOnError: false
+  postprovision:
+    shell: sh
+    run: sh infra/scripts/hook_python.sh infra/scripts/setup_knowledge.py
+    continueOnError: false
+
+services:
+  orchestrator-api:
+    project: apps/chat/orchestrator
+    language: python
+    host: containerapp
+    docker:
+      path: ./Dockerfile.api
+      remoteBuild: true
+  ui-v2:
+    project: apps/chat/ui_v2
+    language: js
+    host: containerapp
+    docker:
+      path: ./Dockerfile
+      remoteBuild: true
+      buildArgs:
+        - NEXT_PUBLIC_API_URL=${SERVICE_ORCHESTRATOR_API_URI}
+        - NEXT_PUBLIC_VOICE_URL=${SERVICE_VOICE_URI}
+  agent-console:
+    project: apps/chat/agent_console
+    language: js
+    host: containerapp
+    docker:
+      path: ./Dockerfile
+      remoteBuild: true
+      buildArgs:
+        - NEXT_PUBLIC_API_URL=${SERVICE_ORCHESTRATOR_API_URI}
+  assist:
+    project: apps/assist
+    language: js
+    host: containerapp
+    docker:
+      path: ./apps/console/Dockerfile
+      remoteBuild: true
+      buildArgs:
+        - NEXT_PUBLIC_ORCHESTRATOR_URL=${SERVICE_ORCHESTRATOR_API_URI}
+  voice:
+    project: apps/voice/src/app
+    language: py
+    host: containerapp
+    docker:
+      path: ./Dockerfile
+      remoteBuild: true

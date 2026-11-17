@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "organization_url": "https://<organization>.crm<region>.dynamics.com",
+  "tenant_id": "<entra-tenant-id>",
+  "organization_id": "<dataverse-organization-id>",
+  "administrator": {
+    "user_id": "<interactive-administrator-systemuserid>",
+    "entra_object_id": "<interactive-administrator-entra-object-id>"
+  },
+  "queue_id": "<existing-native-voice-queue-id>",
+  "workstreams": [
+    {
+      "workstream_id": "<existing-inbound-voice-workstream-id>",
+      "capacity_profile_id": "<its-existing-inbound-capacity-profile-id>"
+    }
+  ],
+  "representatives": [
+    {
+      "user_id": "<first-approved-human-systemuserid>",
+      "entra_object_id": "<first-human-entra-object-id>",
+      "bookable_resource_id": "<first-existing-user-bookable-resource-id>",
+      "approved": false,
+      "voice_license_admin_confirmed": false,
+      "native_access_admin_confirmed": false,
+      "required_role_ids": [
+        "<first-human-basic-user-role-id>",
+        "<first-human-omnichannel-agent-role-id>",
+        "<first-human-app-profile-user-role-id>"
+      ],
+      "capacity_limits": [
+        {
+          "capacity_profile_id": "<its-existing-inbound-capacity-profile-id>",
+          "max_units": null
+        }
+      ]
+    },
+    {
+      "user_id": "<second-approved-human-systemuserid>",
+      "entra_object_id": "<second-human-entra-object-id>",
+      "bookable_resource_id": "<second-existing-user-bookable-resource-id>",
+      "approved": false,
+      "voice_license_admin_confirmed": false,
+      "native_access_admin_confirmed": false,
+      "required_role_ids": [
+        "<second-human-basic-user-role-id>",
+        "<second-human-omnichannel-agent-role-id>",
+        "<second-human-app-profile-user-role-id>"
+      ],
+      "capacity_limits": [
+        {
+          "capacity_profile_id": "<its-existing-inbound-capacity-profile-id>",
+          "max_units": null
+        }
+      ]
+    }
+  ],
+  "approval": {
+    "reference": "<private-administrative-change-approval-reference>",
+    "shared_capacity_and_queue_policy_reviewed": false
+  }
+}

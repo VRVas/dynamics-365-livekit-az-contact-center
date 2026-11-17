@@ -1,0 +1,17 @@
+.venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+.env
+.env.*
+!.env.example
+.foundry
+.git
+.gitignore
+.pytest_cache
+.mypy_cache
+.ruff_cache
+*.log
+smoke.py

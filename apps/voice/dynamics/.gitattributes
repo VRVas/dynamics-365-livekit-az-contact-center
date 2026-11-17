@@ -1,0 +1,2 @@
+# Preserve native topic bytes; generated Copilot controllers use CRLF.
+*.topic.yaml -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

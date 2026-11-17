@@ -1,0 +1,8 @@
+{
+  "tenant_id": "<approved Entra tenant UUID>",
+  "org_url": "https://<organization>.crm<region>.dynamics.com",
+  "native_acs_resource_id": "/subscriptions/<subscription UUID>/resourceGroups/<native group>/providers/Microsoft.Communication/communicationServices/<native ACS name>",
+  "workstream_id": "<approved inbound workstream UUID>",
+  "queue_id": "<approved native queue UUID>",
+  "callback_url": "https://<voice application>.<environment>.<region>.azurecontainerapps.io/acs/call-events"
+}

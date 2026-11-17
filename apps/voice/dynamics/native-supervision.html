@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pause AI | إيقاف المساعد مؤقتاً</title>
+  <style>
+    body { font: 16px system-ui, sans-serif; color: #172b3a; margin: 24px; max-width: 700px; }
+    button { font: inherit; padding: 10px 18px; margin: 8px 8px 8px 0; cursor: pointer; }
+    #pause-ai { background: #084c61; color: white; border: 0; border-radius: 6px; }
+    #pause-ai:disabled { opacity: .5; cursor: default; }
+    #pause-status { padding: 16px; background: #f0f5f7; border-radius: 6px; min-height: 48px; }
+    #pause-detail { line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <button id="pause-language" type="button">العربية</button>
+  <h1 id="pause-title">Pause AI</h1>
+  <p id="pause-detail"></p>
+  <button id="pause-ai" type="button" disabled>Pause AI</button>
+  <p id="pause-status" role="status" aria-live="polite"></p>
+  <script src="native-supervision.js"></script>
+</body>
+</html>

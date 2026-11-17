@@ -1,0 +1,6 @@
+# Local-only extras for the legacy handoff app (app.py) and CLI smoke test (smoke.py).
+# These are NOT needed by the hosted agent (main.py). For full local dev install:
+#   pip install --pre -r requirements.txt -r requirements-dev.txt
+agent-framework-orchestrations==1.0.0rc3
+fastapi
+uvicorn[standard]

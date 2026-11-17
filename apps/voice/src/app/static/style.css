@@ -1,0 +1,515 @@
+
+
+
+
+/* ----------------------------------------
+   Global & Background
+---------------------------------------- */
+* {
+  font-family: "Segoe UI", Arial, sans-serif !important;
+  box-sizing: border-box;
+}
+
+:root {
+  --panel-radius: 12px;   /* single place to change the corner radius */
+}
+
+html,
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(to bottom, #073d2a, #006a46);
+    /* background: radial-gradient(circle, #073d2a, #006a46); */
+
+  color: #fff;
+  overflow: hidden;
+  overflow-x: hidden;
+}
+
+/* ----------------------------------------
+   Header (config button only)
+---------------------------------------- */
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.5rem 1rem;
+  height: 3rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+.config-button { display: none !important; }
+
+/* ----------------------------------------
+   Control Header (logo + title)
+---------------------------------------- */
+.control-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #5a5a5a;
+}
+.control-header .logo-container img { height: 40px; margin-right: 0.75rem; }
+.control-title  { margin: 0; font-size: 1.2rem; color: #fff; flex: 1; }
+
+ /* ----------------------------------------
+    Sidebar
+ ---------------------------------------- */
+.sidebar {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 20rem;
+  height: 100%;
+  background: #7CB367;
+  padding: 2rem;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+  color: #9ce2e6;
+  z-index: 999;
+}
+.sidebar h2 { margin-top: 0; }
+.dropdown-container label,
+.dropdown-container select {
+  color: #212121;
+  margin-top: 1rem;
+  display: block;
+}
+.dropdown-container select {
+  width: 100%;
+  padding: 0.5rem;
+  background: #212121;
+  border: none;
+  color: #0A0A0A;
+}
+
+/* ----------------------------------------
+   Main layout (override Pico’s .container)
+---------------------------------------- */
+.main-container  {
+  position: fixed;
+  inset: 1rem 0 0 0;          /* top:1rem; right/bottom/left:0 */
+  display: flex;
+  overflow: hidden;
+}
+
+main.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  gap: 1rem;
+  align-items: stretch;
+  overflow: hidden;
+
+  max-width: none;            /* remove Pico width cap */
+  margin: 0;
+  padding-inline: 3rem;       /* side gutters */
+}
+
+/* ----------------------------------------
+   Controls panel
+---------------------------------------- */
+.controls-panel {
+  width: 15rem;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.control-box {
+  background: #212121;
+  border-radius: var(--panel-radius);
+  padding: 1rem;
+  font-size: 1rem;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.control-box h3 { margin-top: 0; color: #073d2a; font-size: 1rem; }
+
+/* ----------------------------------------
+   Tab selector and content
+---------------------------------------- */
+.tab-selector {
+  display: flex;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tab-button {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 400;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.tab-button:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-button.active {
+  color: #fff;
+  border-bottom-color: #073d2a;
+  background: rgba(102, 32, 70, 0.1);
+}
+
+.tab-content {
+  position: relative;
+}
+
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+/* ----------------------------------------
+   Call form styling
+---------------------------------------- */
+.call-form {
+  margin-top: 0rem;
+}
+
+.call-form .button-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem !important;  /* Nice small gap */
+  margin-top: 1rem !important;
+  padding: 0 !important;
+}
+
+.phone-input {
+  width: 100%;
+  padding: 0.25rem 0.7rem !important;  /* Force smaller padding */
+  font-size: 0.8rem !important;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid #073d2a !important;
+  /* border-image: radial-gradient(circle,#073d2a 0%,#006a46 100%) !important; */
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  height: 1.8rem !important;  /* Force smaller height */
+  max-height: 2rem !important;
+  min-height: 2rem !important;
+  margin: 0 !important;  /* Force zero margin */
+  margin-bottom: 0 !important;  /* Specifically zero bottom margin */
+}
+
+.phone-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem !important;
+  font-weight: 400;
+}
+
+.phone-input:focus {
+  border-color: #073d2a;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 2px rgba(102, 32, 70, 0.2);
+}
+
+.call-button {
+  width: 100%;
+  height: 2rem !important;  /* Force smaller button height */
+  max-height: 2rem !important;
+  min-height: 2rem !important;
+  padding: 0 !important;
+  margin: 0 !important;  /* Force zero margin */
+  margin-top: 0 !important;  /* Specifically zero top margin */
+  padding: 0;
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: radial-gradient(circle,#073d2a 0%,#006a46 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.call-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 32, 70, 0.3);
+  background: radial-gradient(circle,#073d2a 0%,#006a46 100%);
+}
+
+.call-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* ----------------------------------------
+   Button row (main action + optional mic)
+---------------------------------------- */
+.button-row {
+  display: flex;
+  gap: 0.25rem;      /* exactly the spacing you requested */
+}
+
+/* ----------------------------------------
+   Action button
+---------------------------------------- */
+.action-button {
+  flex: 1;                       /* fills all remaining space */
+  display: block;
+  padding: 0.9rem 1.2rem;
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  background: radial-gradient(circle,#073d2a 0%,#006a46 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(102,32,70,.3);
+  transition: all .3s cubic-bezier(.4,0,.2,1);
+  text-shadow: 0 1px 2px rgba(0,0,0,.1);
+}
+.action-button::before {          /* shimmer */
+  content: '';
+  position: absolute;
+  inset: 0;
+  left: -100%;
+  background: linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
+  transition: left .5s ease;
+}
+.action-button:hover      { transform: translateY(-2px);
+                            box-shadow: 0 8px 25px rgba(102,32,70,.4);
+                            background: radial-gradient(circle,#073d2a 0%,#006a46 100%); }
+.action-button:hover::before { left: 100%; }
+.action-button:active     { transform: translateY(0); box-shadow: 0 2px 10px rgba(102,32,70,.3); transition: .1s; }
+.action-button:focus      { outline: none; box-shadow: 0 4px 15px rgba(102,32,70,.3),0 0 0 3px rgba(102,32,70,.3); }
+
+/* ----------------------------------------
+   Microphone button
+---------------------------------------- */
+.mic-button {
+  display: inline-block;
+  width: 3rem;                  /* fixed width so the main button can calc */
+  height: calc(2rem + 3.6rem);  /* matches action button: font-size + padding */
+  padding: 0;
+  margin-top: 1rem;
+  margin-left: 0.25rem;
+  font-size: 1rem;
+  font-weight: 500;
+  background: radial-gradient(circle,#073d2a 0%,#006a46 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(102,32,70,.3);
+  transition: all .3s cubic-bezier(.4,0,.2,1);
+  text-shadow: 0 1px 2px rgba(0,0,0,.1);
+  vertical-align: top;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mic-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  left: -100%;
+  background: linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
+  transition: left .5s ease;
+}
+
+.mic-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102,32,70,.4);
+  background: radial-gradient(circle,#073d2a 0%,#006a46 100%);
+}
+
+.mic-button:hover::before { left: 100%; }
+
+.mic-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(102,32,70,.3);
+  transition: .1s;
+}
+
+.mic-button:focus {
+  outline: none;
+  box-shadow: 0 4px 15px rgba(102,32,70,.3),0 0 0 3px rgba(102,32,70,.3);
+}
+
+/* Muted state */
+.mic-button.muted {
+  background: radial-gradient(circle,#dc3545 0%,#c82333 100%);
+  box-shadow: 0 4px 15px rgba(220,53,69,.3);
+}
+
+.mic-button.muted:hover {
+  background: radial-gradient(circle,#e74c3c 0%,#c0392b 100%);
+  box-shadow: 0 8px 25px rgba(220,53,69,.4);
+}
+
+/* ----------------------------------------
+   Input field
+---------------------------------------- */
+input[type="text"] {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background: #212121;
+  color: #fff;
+}
+
+/* ----------------------------------------
+   Status & Report
+---------------------------------------- */
+#statusMessage { margin-top: 1rem; color: #073d2a; }
+#report        { margin-top: 1rem; background:#000f33; color:#fff;
+                 padding:1rem; border-radius:5px; display:none; }
+#report:not(:empty){ display:block; }
+
+/* ----------------------------------------
+   Chat panel
+---------------------------------------- */
+.chat-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-bottom: 1rem;
+  border-radius: var(--panel-radius);
+  overflow: hidden;                /* clips iframe to radius */
+}
+.chat-panel iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: var(--panel-radius);
+  flex: 1;
+}
+
+/* ----------------------------------------
+   Agents section
+---------------------------------------- */
+.agents-section {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #5a5a5a;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.agents-section h4 {
+  margin: 0 0 0.75rem 0;
+  color: #fff;
+  font-size: .95rem;
+  flex-shrink: 0;
+}
+.agents-list {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  flex: 1;
+  overflow-y: auto;
+}
+.agent-item {
+  position: relative;
+  padding: 0.6rem 0.8rem;
+  background: #424242;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all .3s cubic-bezier(.4,0,.2,1);
+  font-size: .85rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  overflow: hidden;                /* keeps shimmer inside */
+}
+/* shimmer */
+.agent-item::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  left:-100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);
+  transition:left .5s ease;
+}
+.agent-item:hover {
+  background:radial-gradient(circle,#073d2a 0%,#006a46 100%);
+  transform:translateY(-1px);
+  box-shadow:0 4px 15px rgba(102,32,70,.25);
+}
+.agent-item:hover::before { left:100%; }
+.agent-item:active        { transform:translateY(0); box-shadow:0 2px 8px rgba(0,0,0,.1); }
+
+/* ------------------------------------------------------------------
+   Tooltip (works with JS‑added .show-tooltip class)
+------------------------------------------------------------------ */
+.agent-item.show-tooltip {
+  overflow: visible;          /* allow the bubble to escape */
+  z-index: 5000;              /* rise above neighbours */
+}
+
+/* bubble */
+.agent-item.show-tooltip::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 12rem;
+  max-width: 18rem;
+  padding: .6rem .9rem;
+  font-size: .75rem;
+  line-height: 1.35;
+  color: #fff;
+  background: rgba(0,0,0,.9);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.4);
+  white-space: normal;
+  pointer-events: none;
+  opacity: 1;
+}
+
+/* arrow */
+.agent-item.show-tooltip::before {
+  content:'';
+  position:absolute;
+  top:-0.5rem;
+  left:50%;
+  transform:translateX(-50%);
+  border-left:6px solid transparent;
+  border-right:6px solid transparent;
+  border-top:8px solid rgba(0,0,0,.9);
+  pointer-events:none;
+}
+
+body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; }
+
+.logo-container { background: white; border-radius: 8px; padding: 8px; }
